@@ -89,6 +89,13 @@ jobs:
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASS_TOKEN }}
       run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
 
+    - name: To print creds
+      env:
+        DOCKER_USER: ${{ secrets.DOCKER_USER_NAME }}
+        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASS_TOKEN }}
+      run: echo $DOCKER_PASSWORD
+
+
     - name: Build the Docker image for Fastapi app
       env:
         DOCKER_USER: ${{ secrets.DOCKER_USER_NAME }}
