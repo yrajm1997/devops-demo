@@ -22,7 +22,7 @@ RUN useradd -m -u 1000 myuser
 USER myuser
 
 # copy application files & change/give ownership to myuser
-COPY --chown=myuser /titanic_model_api/app/. /app/.
+COPY --chown=myuser /titanic_model_api/app/. /titanic_model_api/app/.
 
 # expose port for application
 EXPOSE 8001
