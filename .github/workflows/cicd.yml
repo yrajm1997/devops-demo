@@ -104,6 +104,7 @@ jobs:
 
 
   deploy:
+    needs: [train, test, build, push-image]
     runs-on: self-hosted
 
     steps:
