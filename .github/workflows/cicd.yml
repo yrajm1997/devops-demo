@@ -89,13 +89,6 @@ jobs:
         DOCKER_PASSWORD: ${{ secrets.DOCKER_PASS_TOKEN }}
       run: docker login -u $DOCKER_USER -p $DOCKER_PASSWORD
 
-    - name: To print creds
-      env:
-        DOCKER_USER: ${{ secrets.DOCKER_USER_NAME }}
-        DOCKER_PASSWORD: ${{ secrets.DOCKER_PASS_TOKEN }}
-      run: echo $DOCKER_PASSWORD
-
-
     - name: Build the Docker image for Fastapi app
       env:
         DOCKER_USER: ${{ secrets.DOCKER_USER_NAME }}
@@ -108,3 +101,21 @@ jobs:
 
     - name: Logout to Docker hub
       run: docker logout
+
+
+  deploy:
+    runs-on: self-hosted
+
+    steps:
+      - name: Pull Docker Image
+        env: 
+          DOCKER_USER: ${{ secrets.DOCKER_USER_NAME }}
+        run: sudo docker pull $DOCKER_USER/titanic-api:latest
+    
+      - name: Delete Old Docker Container
+        run: sudo docker rm -f titanic-api-container || true
+    
+      - name: Run Docker Container
+        env: 
+          DOCKER_USER: ${{ secrets.DOCKER_USER_NAME }}
+        run: sudo docker run -it -d -p 8001:8001 --name titanic-api-container $DOCKER_USER/titanic-api:latest
