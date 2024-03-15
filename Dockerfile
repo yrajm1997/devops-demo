@@ -23,6 +23,7 @@ USER myuser
 
 # copy application files & change/give ownership to myuser
 COPY --chown=myuser /titanic_model_api/app/. /titanic_model_api/app/.
+COPY --chown=myuser /titanic_model_api/flagged/. /titanic_model_api/flagged/.
 
 # expose port for application
 EXPOSE 8001
